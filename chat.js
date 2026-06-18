@@ -1,73 +1,115 @@
+// Netlify Function - Secure Backend for TenseLabAI Chat
+// Your API key is stored as environment variable on Netlify and NEVER exposed
+
 exports.handler = async (event) => {
-    // Only handle POST requests
-    if (event.httpMethod !== "POST") {
+    // Set CORS headers to allow requests from your website
+    const headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+    };
+
+    // Handle preflight requests
+    if (event.httpMethod === 'OPTIONS') {
+        return { statusCode: 200, headers };
+    }
+
+    // Only accept POST requests
+    if (event.httpMethod !== 'POST') {
         return {
             statusCode: 405,
-            body: JSON.stringify({ error: "Method not allowed" })
+            headers,
+            body: JSON.stringify({ error: 'Only POST requests allowed' })
         };
     }
 
     try {
-        // Parse the incoming message
-        const body = JSON.parse(event.body);
-        const userMessage = body.message;
+        // Parse request body
+        const { message } = JSON.parse(event.body);
 
-        if (!userMessage) {
+        // Validate message
+        if (!message || message.trim() === '') {
             return {
                 statusCode: 400,
-                body: JSON.stringify({ error: "No message provided" })
+                headers,
+                body: JSON.stringify({ error: 'Message cannot be empty' })
             };
         }
 
-        // Get the API key from environment variables (stored in Netlify)
-        const apiKey = process.env.GROQ_API_KEY;
+        // Get API key from environment variables
+        const API_KEY = process.env.GROQ_API_KEY;
 
-        if (!apiKey) {
+        if (!API_KEY) {
+            console.error('GROQ_API_KEY environment variable is not set');
             return {
                 statusCode: 500,
-                body: JSON.stringify({ error: "API key not configured on server" })
+                headers,
+                body: JSON.stringify({ 
+                    error: 'API key not configured on server. Please add GROQ_API_KEY to Netlify environment variables.',
+                    choices: [] 
+                })
             };
         }
 
+        console.log('Sending request to Groq API with message:', message.substring(0, 50) + '...');
+
         // Make request to Groq API
-        const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-            method: "POST",
+        const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
             headers: {
-                "Authorization": `Bearer ${apiKey}`,
-                "Content-Type": "application/json"
+                'Authorization': `Bearer ${API_KEY}`,
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: "llama-3.1-8b-instant",
+                model: 'llama-3.1-8b-instant',
                 messages: [
                     {
-                        role: "system",
-                        content: "You are TenseLab, an AI Grammar Detective. Help students understand English verb tenses in 1-2 clear sentences."
+                        role: 'system',
+                        content: 'You are TenseLab, an AI Grammar Detective. Answer questions about English verb tenses clearly and concisely in 1-2 sentences.'
                     },
                     {
-                        role: "user",
-                        content: userMessage
+                        role: 'user',
+                        content: message
                     }
                 ],
-                max_tokens: 150,
+                max_tokens: 200,
                 temperature: 0.7
             })
         });
+
+        // Check if response is ok
+        if (!groqResponse.ok) {
+            const errorData = await groqResponse.json();
+            console.error('Groq API Error:', errorData);
+            return {
+                statusCode: groqResponse.status,
+                headers,
+                body: JSON.stringify({
+                    error: `Groq API error: ${errorData.error?.message || 'Unknown error'}`,
+                    choices: []
+                })
+            };
+        }
 
         const responseData = await groqResponse.json();
 
         return {
             statusCode: 200,
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers,
             body: JSON.stringify(responseData)
         };
 
     } catch (error) {
-        console.error("Error:", error);
+        console.error('Backend error:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: "Server error: " + error.message })
+            headers,
+            body: JSON.stringify({
+                error: `Server error: ${error.message}`,
+                details: error.toString(),
+                choices: []
+            })
         };
     }
 };
