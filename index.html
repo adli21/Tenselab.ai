@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TenseLabAI - Detective Grammar Academy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">🔬 TenseLabAI</div>
+        <ul class="nav-links">
+            <li class="active" onclick="switchView('game-view')">🕵️‍♂️ Case Files (Game)</li>
+            <li onclick="switchView('learn-view')">📚 Tense Academy</li>
+            <li onclick="switchView('chat-view')">🤖 AI Lab Assistant</li>
+            <li onclick="switchView('dashboard-view')">📊 Detective Dashboard</li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="game-view" class="view-section active">
+            <h1>Crime Scene Investigations</h1>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Analyze the suspects' testimonies. Grammatical clues reveal hidden timelines, lies, or alibis!</p>
+            <div class="story-card">
+                <div id="story-content"></div>
+            </div>
+        </section>
+
+        <section id="learn-view" class="view-section">
+    <h1>The Tenses Blueprint</h1>
+    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Master chronological sequencing to spot structural flaws in suspect statements.</p>
+    <table class="tense-table">
+        <thead>
+            <tr>
+                <th>Tense Aspect</th>
+                <th>Formula / Structure</th>
+                <th>Strategic Application</th>
+                <th>Example Evidence</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- === PAST TENSES === -->
+            <tr>
+                <td><strong>Past Simple</strong></td>
+                <td>Subject + Verb 2 (or irregular)</td>
+                <td>Completed physical actions at a designated, fixed point in the past.</td>
+                <td>"The suspect <em>dropped</em> the safe keys at 9:00 PM."</td>
+            </tr>
+            <tr>
+                <td><strong>Past Continuous</strong></td>
+                <td>Subject + was/were + Verb-ing</td>
+                <td>Actions that were actively in progress when another event interrupted them.</td>
+                <td>"I <em>was baking</em> bread when the alarm system shut down."</td>
+            </tr>
+            <tr>
+                <td><strong>Past Perfect</strong></td>
+                <td>Subject + had + Verb 3 (Past Participle)</td>
+                <td>An action completed strictly *before* another historic event occurred.</td>
+                <td>"By the time the police arrived, the safe cracker <em>had escaped</em>."</td>
+            </tr>
+            <tr>
+                <td><strong>Past Perfect Continuous</strong></td>
+                <td>Subject + had been + Verb-ing</td>
+                <td>An ongoing past action that continued up until another specific past point.</td>
+                <td>"The hacker <em>had been downloading</em> classified files for two hours before we cut the link."</td>
+            </tr>
+
+            <!-- === PRESENT TENSES === -->
+            <tr>
+                <td><strong>Present Simple</strong></td>
+                <td>Subject + Verb 1 (-s/-es)</td>
+                <td>Universal truths, operating procedures, habits, or scheduled routines.</td>
+                <td>"The night guard <em>patrolls</em> the vault every hour on the dot."</td>
+            </tr>
+            <tr>
+                <td><strong>Present Continuous</strong></td>
+                <td>Subject + is/am/are + Verb-ing</td>
+                <td>Live operations or actions happening right now at this exact moment.</td>
+                <td>"The forensic unit <em>is analyzing</em> the red fibers found on the window."</td>
+            </tr>
+            <tr>
+                <td><strong>Present Perfect</strong></td>
+                <td>Subject + have/has + Verb 3</td>
+                <td>Past actions with undeniable relevance, evidence, or impact on the present.</td>
+                <td>"The cleaner <em>has wiped</em> the prints; the glass is completely clear."</td>
+            </tr>
+            <tr>
+                <td><strong>Present Perfect Continuous</strong></td>
+                <td>Subject + have/has been + Verb-ing</td>
+                <td>An action that started in the past and is still actively continuing right now.</td>
+                <td>"The team <em>have been tracking</em> this specific cryptocurrency wallet since dawn."</td>
+            </tr>
+
+            <!-- === FUTURE TENSES === -->
+            <tr>
+                <td><strong>Future Simple</strong></td>
+                <td>Subject + will + Verb 1</td>
+                <td>Predictions, official promises, or instant decisions regarding the investigation.</td>
+                <td>"The cyber unit <em>will trace</em> the IP address before sunrise."</td>
+            </tr>
+            <tr>
+                <td><strong>Future Continuous</strong></td>
+                <td>Subject + will be + Verb-ing</td>
+                <td>An action that will be actively in progress at a specific time in the future.</td>
+                <td>"At midnight, the tactical team <em>will be waiting</em> inside the warehouse."</td>
+            </tr>
+            <tr>
+                <td><strong>Future Perfect</strong></td>
+                <td>Subject + will have + Verb 3</td>
+                <td>An objective that will be completely finished before a future deadline.</td>
+                <td>"By tomorrow noon, the smuggler <em>will have sold</em> the stolen artifact."</td>
+            </tr>
+            <tr>
+                <td><strong>Future Perfect Continuous</strong></td>
+                <td>Subject + will have been + Verb-ing</td>
+                <td>Continuous action measured or counted up to a specific milestone in the future.</td>
+                <td>"By next Friday, the lead inspector <em>will have been running</em> this case for a year."</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+        <section id="chat-view" class="view-section">
+            <h1>AI Lab Assistant</h1>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Query the AI system to 
+                clarify complex tense interactions or analyze sentences manually.</p>
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot">Greetings, Detective.
+                         Submit any sentence or query about tenses, and I will parse its temporal accuracy.</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Ask about a specific tense structure...">
+                    <button onclick="sendChatMessage()">Analyze</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="dashboard-view" class="view-section">
+            <h1>Detective Case Analytics</h1>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Cases Solved</h3>
+                    <p id="stat-solved">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Attempts</h3>
+                    <p id="stat-total">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Accuracy Rating</h3>
+                    <p id="stat-accuracy">0%</p>
+                </div>
+            </div>
+            <h2>Investigation Logging</h2>
+            <ul class="history-list" id="history-log"></ul>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
