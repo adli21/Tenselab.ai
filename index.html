@@ -11,17 +11,99 @@
     <nav>
         <div class="logo">🔬 TenseLabAI</div>
         <ul class="nav-links">
-            <li class="active" onclick="switchView('game-view')">🕵️‍♂️ Case Files (Game)</li>
-            <li onclick="switchView('learn-view')">📚 Tense Academy</li>
-            <li onclick="switchView('chat-view')">🤖 AI Lab Assistant</li>
-            <li onclick="switchView('dashboard-view')">📊 Detective Dashboard</li>
-            <li onclick="switchView('feedback-view')">💬 Feedback</li>
+            <li class="active" onclick="switchView('home-view')">🏛️ Home</li>
+            <li onclick="switchView('learn-view')">📚 Case Archives</li>
+            <li onclick="switchView('game-view')">🕵️ Case Files</li>
+            <li onclick="switchView('dashboard-view')">📊 The Case Ledger</li>
+            <li onclick="switchView('chat-view')">🤖 Forensic AI Unit</li>
+            <li onclick="switchView('feedback-view')">💬 Inquiry Desk</li>
         </ul>
     </nav>
 
     <main>
-        <section id="game-view" class="view-section active">
-            <h1>Crime Scene Investigations</h1>
+        <section id="home-view" class="view-section active">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <div style="text-align: center; padding: 2rem 0;">
+                    <h1 style="font-size: 2.5rem; color: var(--accent); margin-bottom: 0.5rem;">Welcome, Detective.</h1>
+                    <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 3rem;">You have been assigned to the Tense Investigation Unit. Your mission is to solve language-based cases by identifying and correcting grammatical tense errors.</p>
+                    <p style="font-size: 1rem; color: var(--primary); font-weight: bold; margin-bottom: 3rem;">Every case you solve brings you closer to becoming a certified Master Detective.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                    <!-- Case Archives -->
+                    <div style="
+                        background: var(--bg-card);
+                        border-radius: 12px;
+                        padding: 1.5rem;
+                        border-left: 4px solid var(--primary);
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(56, 189, 248, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'" onclick="switchView('learn-view')">
+                        <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 0.5rem;">📚 Case Archives</h3>
+                        <p style="color: var(--text-muted); line-height: 1.6;">Access training materials and review grammar rules needed for investigations.</p>
+                    </div>
+
+                    <!-- Case Files -->
+                    <div style="
+                        background: var(--bg-card);
+                        border-radius: 12px;
+                        padding: 1.5rem;
+                        border-left: 4px solid var(--accent);
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(245, 158, 11, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'" onclick="switchView('game-view')">
+                        <h3 style="color: var(--accent); font-size: 1.3rem; margin-bottom: 0.5rem;">🕵️ Case Files</h3>
+                        <p style="color: var(--text-muted); line-height: 1.6;">Enter active cases and solve tense-related mysteries in the Crime Scene Investigation unit.</p>
+                    </div>
+
+                    <!-- Case Ledger -->
+                    <div style="
+                        background: var(--bg-card);
+                        border-radius: 12px;
+                        padding: 1.5rem;
+                        border-left: 4px solid var(--success);
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(16, 185, 129, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'" onclick="switchView('dashboard-view')">
+                        <h3 style="color: var(--success); font-size: 1.3rem; margin-bottom: 0.5rem;">📊 The Case Ledger</h3>
+                        <p style="color: var(--text-muted); line-height: 1.6;">Track your progress, scores, and detective rank in the investigation database.</p>
+                    </div>
+
+                    <!-- Forensic AI Unit -->
+                    <div style="
+                        background: var(--bg-card);
+                        border-radius: 12px;
+                        padding: 1.5rem;
+                        border-left: 4px solid var(--primary);
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(56, 189, 248, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'" onclick="switchView('chat-view')">
+                        <h3 style="color: var(--primary); font-size: 1.3rem; margin-bottom: 0.5rem;">🤖 Forensic AI Unit</h3>
+                        <p style="color: var(--text-muted); line-height: 1.6;">Get hints and grammar explanations powered by AI assistance for complex tense cases.</p>
+                    </div>
+
+                    <!-- Inquiry Desk -->
+                    <div style="
+                        background: var(--bg-card);
+                        border-radius: 12px;
+                        padding: 1.5rem;
+                        border-left: 4px solid var(--accent);
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(245, 158, 11, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'" onclick="switchView('feedback-view')">
+                        <h3 style="color: var(--accent); font-size: 1.3rem; margin-bottom: 0.5rem;">💬 Inquiry Desk</h3>
+                        <p style="color: var(--text-muted); line-height: 1.6;">Submit feedback and report issues from your investigations to improve the academy.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(248, 250, 252, 0.1);">
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">TenseLabAI™ - Master Grammar, Become a Detective 🔍</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="game-view" class="view-section">
+            <h1>Case Files</h1>
             <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Analyze the suspects' testimonies. Grammatical clues reveal hidden timelines, lies, or alibis!</p>
             <div class="story-card">
                 <div id="story-content"></div>
@@ -29,7 +111,7 @@
         </section>
 
         <section id="learn-view" class="view-section">
-    <h1>The Tenses Blueprint</h1>
+    <h1>Case Archives</h1>
     <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Master chronological sequencing to spot structural flaws in suspect statements.</p>
     <table class="tense-table">
         <thead>
@@ -123,7 +205,7 @@
 </section>
 
         <section id="chat-view" class="view-section">
-            <h1>AI Lab Assistant</h1>
+            <h1>Forensic AI Unit</h1>
             <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Query the AI system to 
                 clarify complex tense interactions or analyze sentences manually.</p>
             <div class="chat-container">
@@ -139,7 +221,7 @@
         </section>
 
         <section id="dashboard-view" class="view-section">
-            <h1>Detective Case Analytics</h1>
+            <h1>The Case Ledger</h1>
             <div class="stats-grid">
                 <div class="stat-card">
                     <h3>Cases Solved</h3>
@@ -159,7 +241,7 @@
         </section>
 
         <section id="feedback-view" class="view-section">
-            <h1>Community Feedback 💬</h1>
+            <h1>Inquiry Desk</h1>
             <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Share your thoughts and help us improve TenseLabAI!</p>
             
             <div class="feedback-form-card">

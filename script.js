@@ -270,8 +270,9 @@ const crimeDatabase = [
 let currentStoryIndex = 0;
 let casesSolved = 0;
 let totalAttempts = 0;
-let caseHistory = [];
+let currentRoundHistory = []; // Tracks only current round (max 20)
 let randomizedCases = [];
+let gameStarted = false; // Track if game is running
 
 // FEEDBACK SYSTEM VARIABLES
 let feedbackList = JSON.parse(localStorage.getItem('tenseLabFeedback')) || [];
@@ -324,10 +325,35 @@ function createRandomizedCaseSet() {
 
 // INVESTIGATION ENGINE (Loads the current case file details with randomized options)
 function loadCurrentCase() {
-    const currentCase = randomizedCases[currentStoryIndex];
     const container = document.getElementById('story-content');
     
     if (!container) return;
+
+    // If game hasn't started, show START button
+    if (!gameStarted) {
+        container.innerHTML = `
+            <div style="text-align: center; padding: 2rem;">
+                <h2 style="color: var(--accent); margin-bottom: 1rem;">🕵️‍♂️ Ready for Investigation?</h2>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Test your grammar detective skills on 20 crime cases.</p>
+                <button onclick="startGame()" style="
+                    padding: 1rem 2rem;
+                    font-size: 1.1rem;
+                    background: var(--primary);
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: bold;
+                ">🚀 START INVESTIGATION</button>
+            </div>
+        `;
+        return;
+    }
+
+    // Game is running - show current case
+    const currentCase = randomizedCases[currentStoryIndex];
+    
+    if (!currentCase) return;
 
     let optionsHTML = '';
     currentCase.options.forEach((option, idx) => {
@@ -344,8 +370,41 @@ function loadCurrentCase() {
     `;
 }
 
+// START GAME FUNCTION
+function startGame() {
+    // Reset all game stats
+    currentStoryIndex = 0;
+    casesSolved = 0;
+    totalAttempts = 0;
+    currentRoundHistory = [];
+    gameStarted = true;
+    
+    // Generate new randomized cases
+    randomizedCases = shuffleArray(crimeDatabase).map(caseItem => {
+        const shuffledOptions = shuffleArray(caseItem.options);
+        const correctAnswer = caseItem.options[caseItem.correctIndex];
+        const newCorrectIndex = shuffledOptions.indexOf(correctAnswer);
+        
+        return {
+            ...caseItem,
+            options: shuffledOptions,
+            correctIndex: newCorrectIndex,
+            originalCorrectIndex: caseItem.correctIndex,
+            originalOptions: caseItem.options
+        };
+    });
+    
+    // Reset dashboard
+    updateMetricsDashboard();
+    
+    // Load first case
+    loadCurrentCase();
+}
+
 // ANSWER HANDLER & SCORE LOGIC
 function submitInvestigatorAnswer(selectedIndex) {
+    console.log('Answer submitted:', { selectedIndex, currentStoryIndex });
+    
     const activeCase = randomizedCases[currentStoryIndex];
     totalAttempts++;
     
@@ -355,13 +414,15 @@ function submitInvestigatorAnswer(selectedIndex) {
     if (isCorrect) {
         casesSolved++;
         statusBadge = `<span class="badge-success">CASE SOLVED</span>`;
+        console.log('✓ Correct answer! Cases solved now:', casesSolved);
         alert("Excellent Deduction, Detective! That aligns perfectly with the timeline evidence.");
     } else {
         statusBadge = `<span class="badge-fail">UNRESOLVED</span>`;
+        console.log('✗ Wrong answer. Cases solved still:', casesSolved);
         alert("Incorrect. That choice creates a temporal paradox or alters the timeline contradiction.");
     }
 
-    caseHistory.unshift({
+    currentRoundHistory.unshift({
         caseTitle: activeCase.title,
         tenseUsed: activeCase.tenseTested,
         result: statusBadge,
@@ -378,44 +439,115 @@ function submitInvestigatorAnswer(selectedIndex) {
     
     currentStoryIndex = (currentStoryIndex + 1) % randomizedCases.length;
     
-    // Regenerate randomized cases when completing all questions
+    // Check if 20 questions completed - show FINISH button
     if (currentStoryIndex === 0) {
-        alert("🎉 Bravo, Detective! With every tense correctly identified, you've proven yourself worthy of the title: The Modern Sherlock of Grammar. Press OK to restart with fresh cases!");
-        
-        randomizedCases = shuffleArray(crimeDatabase).map(caseItem => {
-            const shuffledOptions = shuffleArray(caseItem.options);
-            const correctAnswer = caseItem.options[caseItem.correctIndex];
-            const newCorrectIndex = shuffledOptions.indexOf(correctAnswer);
-            
-            return {
-                ...caseItem,
-                options: shuffledOptions,
-                correctIndex: newCorrectIndex,
-                originalCorrectIndex: caseItem.correctIndex,
-                originalOptions: caseItem.options
-            };
-        });
+        showFinishButton();
+    } else {
+        loadCurrentCase();
     }
+}
+
+// SHOW FINISH BUTTON (After 20 questions completed)
+function showFinishButton() {
+    const container = document.getElementById('story-content');
+    if (!container) return;
+    
+    container.innerHTML = `
+        <div style="text-align: center; padding: 2rem;">
+            <h2 style="color: var(--accent); margin-bottom: 1rem;">🎉 Bravo, Detective!</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">With every tense correctly identified, you've proven yourself worthy of the title:</p>
+            <p style="color: var(--primary); font-size: 1.3rem; font-weight: bold; margin-bottom: 2rem;">The Modern Sherlock of Grammar</p>
+            <button onclick="finishGame()" style="
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+                background: var(--accent);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: bold;
+            ">✓ FINISH</button>
+        </div>
+    `;
+}
+
+// FINISH GAME AND SHOW RESULTS
+function finishGame() {
+    // Update dashboard with current round results
+    updateMetricsDashboard();
+    
+    // Show message telling user to check dashboard
+    const container = document.getElementById('story-content');
+    if (container) {
+        container.innerHTML = `
+            <div style="text-align: center; padding: 2rem;">
+                <h2 style="color: var(--accent); margin-bottom: 1rem;">✅ Investigation Complete!</h2>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Your results have been recorded.</p>
+                <p style="color: var(--primary); font-size: 1.1rem; font-weight: bold; margin-bottom: 2rem;">👈 Click <strong>📊 The Case Ledger</strong> on the left to view your score!</p>
+                <button onclick="resetToStart()" style="
+                    padding: 1rem 2rem;
+                    font-size: 1.1rem;
+                    background: var(--primary);
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: bold;
+                ">↻ Back to Start</button>
+            </div>
+        `;
+    }
+}
+
+// RESET TO START SCREEN
+function resetToStart() {
+    gameStarted = false;
+    currentStoryIndex = 0;
+    casesSolved = 0;
+    totalAttempts = 0;
+    currentRoundHistory = [];
+    randomizedCases = [];
     
     loadCurrentCase();
 }
 
 // DASHBOARD SYNCHRONIZATION 
 function updateMetricsDashboard() {
+    console.log('UPDATE DASHBOARD - memory casesSolved:', casesSolved, 'totalAttempts:', totalAttempts);
+    
     const solvedEl = document.getElementById('stat-solved');
     const totalEl = document.getElementById('stat-total');
     const accuracyEl = document.getElementById('stat-accuracy');
     const logContainer = document.getElementById('history-log');
 
-    if (solvedEl) solvedEl.innerText = casesSolved;
-    if (totalEl) totalEl.innerText = totalAttempts;
+    console.log('Dashboard updating:', { casesSolved, totalAttempts, solvedEl, totalEl, accuracyEl });
+    
+    if (solvedEl) {
+        solvedEl.innerText = casesSolved;
+        console.log('Updated stat-solved to:', casesSolved);
+    }
+    if (totalEl) {
+        totalEl.innerText = totalAttempts;
+        console.log('Updated stat-total to:', totalAttempts);
+    }
     
     let accuracy = totalAttempts > 0 ? Math.round((casesSolved / totalAttempts) * 100) : 0;
-    if (accuracyEl) accuracyEl.innerText = accuracy + "%";
+    if (accuracyEl) {
+        accuracyEl.innerText = accuracy + "%";
+        console.log('Updated stat-accuracy to:', accuracy + "%");
+    }
 
     if (logContainer) {
         logContainer.innerHTML = "";
-        caseHistory.forEach((item, index) => {
+        
+        // Show message if no game has been played
+        if (currentRoundHistory.length === 0) {
+            logContainer.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 2rem;">Click "START INVESTIGATION" to begin playing!</div>';
+            return;
+        }
+        
+        // Show current round history (max 20 items)
+        currentRoundHistory.forEach((item, index) => {
             logContainer.innerHTML += `
                 <li class="history-item" onclick="viewCaseDetails(${index})" style="cursor: pointer;">
                     <span><strong>${item.caseTitle}</strong> (Focus: ${item.tenseUsed})</span>
@@ -428,7 +560,7 @@ function updateMetricsDashboard() {
 
 // CASE DETAILS VIEWER (Modal to show correct answer)
 function viewCaseDetails(caseIndex) {
-    const caseItem = caseHistory[caseIndex];
+    const caseItem = currentRoundHistory[caseIndex];
     if (!caseItem) return;
 
     const modalHTML = `
@@ -797,21 +929,8 @@ function escapeHtml(text) {
 
 // BOOT ENGINE SEQUENCE ON PAGE STARTUP
 window.onload = function() {
-    // Initialize randomized cases on startup
-    randomizedCases = shuffleArray(crimeDatabase).map(caseItem => {
-        const shuffledOptions = shuffleArray(caseItem.options);
-        const correctAnswer = caseItem.options[caseItem.correctIndex];
-        const newCorrectIndex = shuffledOptions.indexOf(correctAnswer);
-        
-        return {
-            ...caseItem,
-            options: shuffledOptions,
-            correctIndex: newCorrectIndex,
-            originalCorrectIndex: caseItem.correctIndex,
-            originalOptions: caseItem.options
-        };
-    });
-    
+    // Show START button initially (don't start game yet)
+    gameStarted = false;
     loadCurrentCase();
     updateMetricsDashboard();
     loadFeedbackDisplay();
