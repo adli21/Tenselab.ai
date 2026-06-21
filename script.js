@@ -9,12 +9,12 @@ const crimeDatabase = [
         story: "During interrogation, the bank manager insisted, 'When I entered the vault at midnight, the hacker deleted the transaction logs.' However, forensic recovery proved every file had already disappeared twenty minutes before the manager even reached the vault. The detective concludes that the manager's wording creates an impossible sequence of events.",
         question: "Which sentence accurately reflects the timeline?",
         options: [
+            "The hacker had deleted the transaction logs.",
             "The hacker deleted the transaction logs.",
             "The hacker was deleting the transaction logs.",
-            "The hacker had deleted the transaction logs.",
             "The hacker has deleted the transaction logs."
         ],
-        correctIndex: 2,
+        correctIndex: 0,
         tenseTested: "Past Perfect"
     },
     {
@@ -22,12 +22,12 @@ const crimeDatabase = [
         story: "At exactly 10:15 PM, agents surrounded the embassy. Through the windows, they saw the suspect frantically copying classified files onto a flash drive. The copying was still happening when officers entered.",
         question: "Which tense correctly describes the action in progress?",
         options: [
+           "The suspect was copying the files.",
             "The suspect copied the files.",
             "The suspect had copied the files.",
-            "The suspect was copying the files.",
             "The suspect has copied the files."
         ],
-        correctIndex: 2,
+        correctIndex: 0,
         tenseTested: "Past Continuous"
     },
     {
@@ -35,12 +35,12 @@ const crimeDatabase = [
         story: "Interpol reports that the crime syndicate began producing fake passports in 2018 and continues operating today. Detectives want to emphasize that the illegal business started in the past and still exists.",
         question: "Which sentence is correct?",
         options: [
-            "The syndicate produced fake passports since 2018.",
             "The syndicate has produced fake passports since 2018.",
+            "The syndicate produced fake passports since 2018.",
             "The syndicate had produced fake passports since 2018.",
             "The syndicate produces fake passports since 2018."
         ],
-        correctIndex: 1,
+        correctIndex: 0,
         tenseTested: "Present Perfect"
     },
     {
@@ -48,12 +48,12 @@ const crimeDatabase = [
         story: "Government servers first came under attack eleven hours ago, and cybersecurity experts are still fighting the intrusion.",
         question: "Which tense best emphasizes the duration and that the attack is still continuing?",
         options: [
+            "The hackers have been attacking the servers for eleven hours.",
             "The hackers have attacked the servers for eleven hours.",
             "The hackers attacked the servers for eleven hours.",
-            "The hackers have been attacking the servers for eleven hours.",
             "The hackers had attacked the servers for eleven hours."
         ],
-        correctIndex: 2,
+        correctIndex: 0,
         tenseTested: "Present Perfect Continuous"
     },
     {
@@ -61,12 +61,12 @@ const crimeDatabase = [
         story: "Every Thursday, the smuggler secretly meets buyers at the same abandoned warehouse before transporting stolen gems overseas.",
         question: "Which tense best describes this repeated routine?",
         options: [
+             "The smuggler meets buyers every Thursday.",
             "The smuggler is meeting buyers every Thursday.",
             "The smuggler has met buyers every Thursday.",
-            "The smuggler meets buyers every Thursday.",
             "The smuggler met buyers every Thursday."
         ],
-        correctIndex: 2,
+        correctIndex: 0,
         tenseTested: "Present Simple"
     },
     {
@@ -88,11 +88,11 @@ const crimeDatabase = [
         question: "Which tense best emphasizes the duration before another past event?",
         options: [
             "They searched for nine hours.",
-            "They had searched for nine hours.",
             "They had been searching for nine hours.",
+            "They had searched for nine hours.",
             "They were searching for nine hours."
         ],
-        correctIndex: 2,
+        correctIndex: 1,
         tenseTested: "Past Perfect Continuous"
     },
     {
@@ -114,29 +114,29 @@ const crimeDatabase = [
         question: "Which tense expresses an action that will be in progress at a future time?",
         options: [
             "The officers will record the meeting.",
-            "The officers will have recorded the meeting.",
             "The officers will be recording the meeting.",
+            "The officers will have recorded the meeting.",
             "The officers record the meeting."
         ],
-        correctIndex: 2,
+        correctIndex: 1,
         tenseTested: "Future Continuous"
     },
     {
         title: "The Judge's Prediction",
-        story: "The detective confidently says, 'Tomorrow, the jury will find the defendant guilty.' This is a prediction about a future event.",
+        story: "The detective confidently says, 'Tomorrow, the jury ________ the defendant guilty.' This is a prediction about a future event.",
         question: "Which tense is used for this future prediction?",
         options: [
             "finds",
-            "found",
             "will find",
+            "found",
             "has found"
         ],
-        correctIndex: 2,
+        correctIndex: 1,
         tenseTested: "Future Simple"
     },
     {
         title: "The Secret Tunnel",
-        story: "By next Monday, prison officials will have been inspecting the escape tunnel for exactly two weeks.",
+        story: "By next Monday, prison officials ______________ the escape tunnel for exactly two weeks.",
         question: "Which tense emphasizes duration up to a future moment?",
         options: [
             "will inspect",
@@ -149,7 +149,7 @@ const crimeDatabase = [
     },
     {
         title: "The Missing Painting",
-        story: "Right now, detectives can clearly see the thief removing the priceless painting from the museum wall through the security cameras.",
+        story: "Right now, detectives can clearly see the thief __________ the priceless painting from the museum wall through the security cameras.",
         question: "Which tense best fits?",
         options: [
             "removes",
@@ -175,28 +175,28 @@ const crimeDatabase = [
     },
     {
         title: "The Smuggler's Routine",
-        story: "Investigators discover the captain secretly transports illegal cargo every full moon, maintaining a consistent schedule.",
+        story: "Investigators discover the captain secretly transported illegal cargo every full moon, maintaining a consistent schedule.",
         question: "Which tense correctly describes this habitual activity?",
         options: [
-            "transports",
             "is transporting",
             "transported",
+            "transports",
             "has transported"
         ],
-        correctIndex: 0,
+        correctIndex: 2,
         tenseTested: "Present Simple"
     },
     {
         title: "The Power Failure",
-        story: "When the lights suddenly went out, the forensic scientist was examining the DNA samples under the microscope.",
+        story: "When the lights suddenly went out, the forensic scientist _________ the DNA samples under the microscope.",
         question: "Which tense best describes the interrupted action?",
         options: [
             "examined",
-            "was examining",
             "had examined",
+            "was examining",
             "has examined"
         ],
-        correctIndex: 1,
+        correctIndex: 2,
         tenseTested: "Past Continuous"
     },
     {
@@ -205,11 +205,11 @@ const crimeDatabase = [
         question: "Which tense best emphasizes the ongoing effort?",
         options: [
             "has decoded",
-            "has been decoding",
             "decoded",
-            "had decoded"
+            "had decoded",
+            "has been decoding"
         ],
-        correctIndex: 1,
+        correctIndex: 3,
         tenseTested: "Present Perfect Continuous"
     },
     {
@@ -219,49 +219,49 @@ const crimeDatabase = [
         options: [
             "disable",
             "will disable",
-            "will have disabled",
-            "will be disabling"
+            "will be disabling",
+            "will have disabled"
         ],
-        correctIndex: 2,
+        correctIndex: 3,
         tenseTested: "Future Perfect"
     },
     {
         title: "The Final Chase",
-        story: "At this exact time tomorrow, helicopters will be flying above the mountains searching for the escaped prisoner.",
+        story: "At this exact time tomorrow, helicopters __________ above the mountains searching for the escaped prisoner.",
         question: "Which tense is correct?",
         options: [
             "will fly",
             "will have flown",
+            "fly",
             "will be flying",
-            "fly"
         ],
-        correctIndex: 2,
+        correctIndex: 3,
         tenseTested: "Future Continuous"
     },
     {
         title: "The Witness Report",
-        story: "Yesterday evening, a tourist unexpectedly discovered the hidden weapon behind the old fireplace in the abandoned mansion.",
+        story: "Yesterday evening, a tourist unexpectedly ___________ the hidden weapon behind the old fireplace in the abandoned mansion.",
         question: "Which tense correctly reports the completed discovery?",
         options: [
             "discovers",
-            "discovered",
             "has discovered",
-            "is discovering"
+            "is discovering",
+            "discovered"
         ],
-        correctIndex: 1,
+        correctIndex: 3,
         tenseTested: "Past Simple"
     },
     {
         title: "The International Investigation",
-        story: "The detective predicts that by next December, international investigators will have been organizing crime across five different countries for nearly four consecutive years.",
+        story: "The detective predicts that by next December, international investigators __________ organized crime across five different countries for nearly four consecutive years.",
         question: "Which tense best expresses both duration and completion up to a future point?",
         options: [
             "will investigate",
             "will have investigated",
-            "will have been investigating",
-            "investigate"
+            "investigate",
+            "will have been investigating"
         ],
-        correctIndex: 2,
+        correctIndex: 3,
         tenseTested: "Future Perfect Continuous"
     }
 ];
@@ -379,20 +379,9 @@ function startGame() {
     currentRoundHistory = [];
     gameStarted = true;
     
-    // Generate new randomized cases
-    randomizedCases = shuffleArray(crimeDatabase).map(caseItem => {
-        const shuffledOptions = shuffleArray(caseItem.options);
-        const correctAnswer = caseItem.options[caseItem.correctIndex];
-        const newCorrectIndex = shuffledOptions.indexOf(correctAnswer);
-        
-        return {
-            ...caseItem,
-            options: shuffledOptions,
-            correctIndex: newCorrectIndex,
-            originalCorrectIndex: caseItem.correctIndex,
-            originalOptions: caseItem.options
-        };
-    });
+    // Randomize only the case order (questions random)
+    // Keep options and correctIndex unchanged
+    randomizedCases = shuffleArray(crimeDatabase);
     
     // Reset dashboard
     updateMetricsDashboard();
@@ -408,7 +397,13 @@ function submitInvestigatorAnswer(selectedIndex) {
     const activeCase = randomizedCases[currentStoryIndex];
     totalAttempts++;
     
+    console.log('Active Case:', activeCase);
+    console.log('Selected Index:', selectedIndex, 'Correct Index:', activeCase.correctIndex);
+    console.log('Selected Answer:', activeCase.options[selectedIndex]);
+    console.log('Correct Answer:', activeCase.options[activeCase.correctIndex]);
+    
     let isCorrect = selectedIndex === activeCase.correctIndex;
+    console.log('Is Correct:', isCorrect);
     let statusBadge = "";
 
     if (isCorrect) {
