@@ -667,7 +667,7 @@ async function sendChatMessage() {
 
     try {
         // YOUR API KEY - PASTE HERE FOR LOCAL TESTING
-        const GROQ_API_KEY = "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";
+        const GROQ_API_KEY = "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";
 
         // Call Groq API directly
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
